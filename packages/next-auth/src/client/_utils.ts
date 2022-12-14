@@ -6,6 +6,7 @@ export interface AuthClientConfig {
   basePath: string
   baseUrlServer: string
   basePathServer: string
+  fetchOptions?: RequestInit
   /** Stores last session response */
   _session?: Session | null | undefined
   /** Used for timestamp since last sycned (in seconds) */
@@ -36,10 +37,12 @@ export async function fetchData<T = any>(
   { ctx, req = ctx?.req }: CtxOrReq = {}
 ): Promise<T | null> {
   const url = `${apiBaseUrl(__NEXTAUTH)}/${path}`
+  const options = __NEXTAUTH.fetchOptions ?? {}
   try {
-    const options = req?.headers.cookie
-      ? { headers: { cookie: req.headers.cookie } }
-      : {}
+    if (req?.headers.cookie) {
+      options.headers = new Headers(options.headers)
+      options.headers.set('cookie', req.headers.cookie)
+    }
     const res = await fetch(url, options)
     const data = await res.json()
     if (!res.ok) throw data
