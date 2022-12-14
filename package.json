@@ -2,7 +2,7 @@
   "name": "next-auth",
   "version": "0.0.0",
   "private": true,
-  "repository": "https://github.com/nextauthjs/next-auth.git",
+  "repository": "https://github.com/emroot/next-auth.git",
   "scripts": {
     "build:app": "turbo run build --filter=next-auth-app",
     "build": "turbo run build --filter=next-auth --filter=@next-auth/* --filter=@auth/* --no-deps",
