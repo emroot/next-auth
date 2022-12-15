@@ -296,10 +296,9 @@ export async function signOut<R extends boolean = true>(
     body: new URLSearchParams({
       csrfToken: (await getCsrfToken()) ?? "",
       callbackUrl,
-    }),
-    credentials: "include",
+    })
   }
-  const res = await fetch(`${baseUrl}/signout`, fetchOptions)
+  const res = await fetch(`${baseUrl}/signout`, {...fetchOptions, credentials: "include"})
   const data = await res.json()
 
   broadcast.post({ event: "session", data: { trigger: "signout" } })
