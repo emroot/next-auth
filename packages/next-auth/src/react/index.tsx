@@ -297,6 +297,7 @@ export async function signOut<R extends boolean = true>(
       csrfToken: (await getCsrfToken()) ?? "",
       callbackUrl,
     }),
+    credentials: "include",
   }
   const res = await fetch(`${baseUrl}/signout`, fetchOptions)
   const data = await res.json()
